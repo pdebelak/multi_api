@@ -26,4 +26,4 @@ aggregate responses from multiple endpoints.
 ## Running it
 
 1. `mix deps.get`
-2. `mix run --no-halt`
+2. `mix multi_api.server` - starts server on port 3456
