@@ -1,11 +1,13 @@
-defmodule ServerTest do
+defmodule RouterTest do
   use ExUnit.Case, async: true
   use Plug.Test
+
+  @opts MultiApi.Router.init([])
 
   test "get to root path is usage instructions as application/json" do
     conn = conn(:get, "/")
     |> put_req_header("content-type", "application/json")
-    |> MultiApi.Server.call([])
+    |> MultiApi.Router.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 200
@@ -14,7 +16,7 @@ defmodule ServerTest do
 
   test "get to root path is home page for other content types" do
     conn = conn(:get, "/")
-    |> MultiApi.Server.call([])
+    |> MultiApi.Router.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 200
@@ -23,7 +25,7 @@ defmodule ServerTest do
 
   test "get to other path is 404" do
     conn = conn(:get, "/path")
-    |> MultiApi.Server.call([])
+    |> MultiApi.Router.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 404
@@ -32,16 +34,17 @@ defmodule ServerTest do
 
   test "post to non-root path is 404" do
     conn = conn(:post, "/path")
-    |> MultiApi.Server.call([])
+    |> MultiApi.Router.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 404
     assert Poison.decode!(conn.resp_body) == %{"error" => "Not found"}
   end
 
-  test "post to root path is successful" do
-    conn = conn(:post, "/", "[]")
-    |> MultiApi.Server.call([])
+  test "json post to root path is successful" do
+    conn = conn(:post, "/", "{\"urls\":[]}")
+    |> put_req_header("content-type", "application/json")
+    |> MultiApi.Router.call(@opts)
 
     assert conn.state == :sent
     assert conn.status == 200

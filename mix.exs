@@ -16,9 +16,12 @@ defmodule MultiApi.Mixfile do
   def application do
     [
       mod: {MultiApi, []},
-      applications: [:logger, :cowboy, :plug, :httpotion]
+      applications: applications(Mix.env)
     ]
   end
+
+  defp applications(:dev), do: applications(:all) ++ [:remix]
+  defp applications(_all), do: [:logger, :cowboy, :plug, :httpotion]
 
   # Dependencies can be Hex packages:
   #
@@ -34,6 +37,7 @@ defmodule MultiApi.Mixfile do
      {:poison, "~> 2.0"},
      {:httpotion, "~> 3.0.0"},
      {:bypass, "~> 0.1", only: :test},
+     {:remix, "~> 0.0.1", only: :dev},
      {:plug, "~> 1.0"}]
   end
 end
