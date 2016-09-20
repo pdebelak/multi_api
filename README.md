@@ -5,7 +5,7 @@ returns a array representing a get request to each url like so:
 
 ```
 # request
-["http://example.com/url1","http://example.com/url2"]
+{"urls":["http://example.com/url1","http://example.com/url2"]}
 
 # response
 [
