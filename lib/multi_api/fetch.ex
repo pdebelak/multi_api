@@ -3,7 +3,8 @@ defmodule MultiApi.Fetch do
   def fetch(urls) when is_binary(urls), do: @invalid_argument
   def fetch(urls) when is_list(urls) do
     urls |>
-    MultiApi.AsyncMap.async_map(&fetch_url/1, &as_map/1)
+    MultiApi.AsyncMap.async_map(&fetch_url/1) |>
+    Enum.map(&as_map/1)
   end
   def fetch(_), do: @invalid_argument
 
