@@ -6,8 +6,9 @@ defmodule AsyncMapTest do
     list = ["one", "two"]
 
     regular_map = list |>
-    Enum.map(async)
+    Enum.map(async) |>
+    Enum.sort
 
-    assert MultiApi.AsyncMap.async_map(list, async) == regular_map
+    assert MultiApi.AsyncMap.async_map(list, async) |> Enum.sort == regular_map
   end
 end

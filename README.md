@@ -21,7 +21,8 @@ returns a array representing a get request to each url like so:
 ```
 
 It gets hits the passed urls simultaneously so it is meant to be a fast way to
-aggregate responses from multiple endpoints.
+aggregate responses from multiple endpoints. The order of the response is not
+guaranteed to be the same as the order of the request.
 
 ## Running it
 
