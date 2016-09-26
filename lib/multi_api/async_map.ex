@@ -1,10 +1,7 @@
 defmodule MultiApi.AsyncMap do
   def async_map(list, async) do
     list |>
-    Enum.map(fn (item) ->
-      async_single(item, async)
-      item
-    end) |>
+    Enum.map(fn (item) -> async_single(item, async) end) |>
     length() |>
     stream_responses()
   end
@@ -12,25 +9,22 @@ defmodule MultiApi.AsyncMap do
   defp async_single(item, async) do
     pid = self()
     spawn_link(fn -> send(pid, async.(item)) end)
+    item
   end
 
   defp stream_responses(count) do
     Stream.resource(
-      fn -> [] end,
-      fn (values) ->
-        if length(values) >= count do
-          {:halt, values}
+      fn -> 0 end,
+      fn (processed) ->
+        if processed >= count do
+          {:halt, processed}
         else
           receive do
-            response -> receive_response(response, values)
+            response -> {[response], processed + 1}
           end
         end
       end,
       fn (values) -> values end
     )
-  end
-
-  defp receive_response(response, values) do
-    {[response], values ++ [response]}
   end
 end
