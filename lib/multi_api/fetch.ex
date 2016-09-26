@@ -9,17 +9,13 @@ defmodule MultiApi.Fetch do
   def fetch(_), do: @invalid_argument
 
   defp fetch_url(url) do
-    {url, get_body(url)}
+    {url, HTTPotion.get(url)}
   end
 
-  defp as_map({ url, response }) do
-    %{ url: url, response: response }
+  defp as_map({url, %HTTPotion.Response{ body: body, status_code: status_code }}) do
+    %{ url: url, response: MultiApi.TryParse.parse(body), status_code: status_code }
   end
-
-  defp get_body(url) do
-    case HTTPotion.get(url) do
-      %HTTPotion.Response{ body: body } -> MultiApi.TryParse.parse(body)
-      %HTTPotion.ErrorResponse{ message: message } -> %{ error: message }
-    end
+  defp as_map({url, %HTTPotion.ErrorResponse{ message: message}}) do
+    %{ url: url, error: message }
   end
 end

@@ -19,7 +19,8 @@
       "title":"sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
       "id":1,
       "body":"quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-    }
+    },
+    "status_code: 200
   },
   {
     "url": "http://jsonplaceholder.typicode.com/posts/2",
@@ -28,7 +29,8 @@
       "title":"qui est esse",
       "id":2,
       "body":"est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-    }
+    },
+    "status_code: 200
   }
 ]
       </pre>

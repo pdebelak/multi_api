@@ -11,11 +11,13 @@ returns a array representing a get request to each url like so:
 [
   {
     "url":"http://example.com/url1",
-    "response": "first response"
+    "response": "first response",
+    "status_code": 200
   },
   {
     "url":"http://example.com/url2",
-    "response": "second response"
+    "response": "second response",
+    "status_code": 200
   }
 ]
 ```

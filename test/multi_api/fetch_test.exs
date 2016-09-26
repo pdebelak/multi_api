@@ -15,7 +15,7 @@ defmodule FetchTest do
     end
     url = endpoint_url(bypass.port, request_path)
     fetch = MultiApi.Fetch.fetch([url])
-    assert [%{url: url, response: %{"listings" => []}}] == fetch
+    assert [%{url: url, response: %{"listings" => []}, status_code: 200}] == fetch
   end
 
   test "response is invalid json", %{bypass: bypass} do
@@ -27,7 +27,7 @@ defmodule FetchTest do
     end
     url = endpoint_url(bypass.port, request_path)
     fetch = MultiApi.Fetch.fetch([url])
-    assert [%{url: url, response: "{\"listings\": []"}] == fetch
+    assert [%{url: url, response: "{\"listings\": []", status_code: 200}] == fetch
   end
 
   test "with bad request" do
